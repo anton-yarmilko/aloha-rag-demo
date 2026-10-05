@@ -1,24 +1,14 @@
 """Flask front-end for the demo RAG support assistant."""
-from flask import Flask, jsonify, render_template_string, request
+from flask import Flask, jsonify, render_template, request
 
 from rag import load_sections, search
 
 app = Flask(__name__)
 SECTIONS = load_sections()
 
-PAGE = """
-<!doctype html>
-<title>Aloha Support Assistant (demo)</title>
-<h1>Aloha Support Assistant (demo)</h1>
-<p>Synthetic demo data only. Not official NCR guidance. No LLM or self-learning.</p>
-<form action="/ask"><input name="q" size="60"
-  placeholder="e.g. kitchen printer offline"><button>Ask</button></form>
-"""
-
-
 @app.get("/")
 def index():
-    return render_template_string(PAGE)
+    return render_template("index.html")
 
 
 @app.get("/ask")
@@ -41,4 +31,4 @@ def ask():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host="127.0.0.1", port=5081, debug=False, use_reloader=False)
