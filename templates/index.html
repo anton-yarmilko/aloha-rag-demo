@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Aloha — Support knowledge demo</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='app.css') }}">
+  <script src="{{ url_for('static', filename='app.js') }}" defer></script>
+</head>
+<body>
+  <main>
+    <header><span class="brand">aloha<span class="dot">.</span></span><span class="badge">Retrieval demo</span></header>
+    <section class="intro">
+      <p class="eyebrow">SUPPORT KNOWLEDGE · LOCAL FIRST</p>
+      <h1>Find the source.<br>Understand the next step.</h1>
+      <p class="lead">Search a small, synthetic Aloha-style knowledge base. Read the retrieved answer and see where it came from.</p>
+    </section>
+    <aside class="notice">Synthetic demo data only. Not official NCR guidance. No LLM or self-learning. Not medical content.</aside>
+    <section class="panel" aria-labelledby="search-heading">
+      <h2 id="search-heading">What are you looking for?</h2>
+      <form id="search-form" action="/ask" method="get">
+        <label for="query">Describe a demo issue in English</label>
+        <div class="search-row"><input id="query" name="q" required placeholder="e.g. kitchen printer offline" autocomplete="off" aria-describedby="privacy"><button id="submit" type="submit">Search knowledge</button></div>
+      </form>
+      <p id="privacy" class="muted">Do not enter private customer, payment, employee or company information. Queries use a URL and may be retained in logs.</p>
+      <noscript><p>JavaScript is disabled. The form will open the raw JSON API response.</p></noscript>
+      <p id="status" role="status" aria-live="polite">Ready. Try “kitchen printer offline”.</p>
+    </section>
+    <section id="result" class="panel" aria-labelledby="answer-heading" hidden>
+      <p class="eyebrow">RETRIEVED TEXT · NOT GENERATED</p>
+      <h2 id="answer-heading">Retrieved answer</h2>
+      <p id="matched-section" class="muted"></p>
+      <pre id="answer"></pre>
+      <h3>Ranked sources</h3>
+      <p class="muted">Lexical ranking scores are not confidence or probability.</p>
+      <ol id="sources"></ol>
+    </section>
+    <footer>English synthetic examples · No external AI service · Restart after editing the knowledge base</footer>
+  </main>
+</body>
+</html>

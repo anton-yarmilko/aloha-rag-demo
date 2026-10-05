@@ -1,4 +1,7 @@
 import unittest
+import runpy
+from pathlib import Path
+from unittest.mock import patch
 
 from app import app
 
@@ -11,6 +14,22 @@ class ApiTests(unittest.TestCase):
         response = self.client.get("/")
         self.assertEqual(response.status_code, 200)
         self.assertIn(b"synthetic", response.data.lower())
+
+    def test_home_exposes_accessible_search_and_result_regions(self):
+        page = self.client.get("/").get_data(as_text=True)
+        self.assertIn('name="viewport"', page)
+        self.assertIn('for="query"', page)
+        self.assertIn('id="answer"', page)
+        self.assertIn('id="sources"', page)
+        self.assertIn('role="status"', page)
+        self.assertIn('Do not enter private', page)
+
+    def test_direct_local_launch_disables_debugger_and_reloader(self):
+        from flask import Flask
+
+        with patch.object(Flask, "run") as run:
+            runpy.run_path(str(Path(__file__).resolve().parents[1] / "app.py"), run_name="__main__")
+        run.assert_called_once_with(host="127.0.0.1", port=5081, debug=False, use_reloader=False)
 
     def test_matching_query_returns_verbatim_answer_and_ranked_sources(self):
         from rag import load_sections
