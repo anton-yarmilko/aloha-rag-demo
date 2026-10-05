@@ -10,6 +10,7 @@ PAGE = """
 <!doctype html>
 <title>Aloha Support Assistant (demo)</title>
 <h1>Aloha Support Assistant (demo)</h1>
+<p>Synthetic demo data only. Not official NCR guidance. No LLM or self-learning.</p>
 <form action="/ask"><input name="q" size="60"
   placeholder="e.g. kitchen printer offline"><button>Ask</button></form>
 """
