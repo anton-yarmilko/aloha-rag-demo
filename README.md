@@ -67,9 +67,11 @@ The standard-library test suite covers title weighting, introduction exclusion, 
 
 `.github/workflows/tests.yml` configures the same tests for Python 3.11 and 3.14 on pushes and pull requests, using read-only repository permission and SHA-pinned official actions. Configuration alone does not prove a successful GitHub run. Flask stays pinned in `requirements.txt`; transitive dependencies are not locked, and no dependency-security claim is made.
 
+A separate Chromium job is configured on Ubuntu 24.04 with Python 3.14 and a 10-minute timeout. It installs `requirements-browser.txt`, checks dependencies, installs Chromium and Linux system dependencies using [Playwright's documented CI procedure](https://playwright.dev/python/docs/ci), and runs `browser_tests/`. No application deployment, credentials or external AI service are required. Browser binaries are not cached between CI runs. This configuration has been prepared locally; a successful Linux/GitHub execution must be verified after publication, not inferred from the local macOS test results.
+
 ## Optional local browser regressions
 
-The Chromium suite is separate from `tests/` and is **not run by the current CI**. [Playwright's Python library](https://playwright.dev/python/docs/library) provides the browser driver; `requirements-browser.txt` pins its direct version without adding it to the runtime requirements. Transitive packages are not locked.
+The Chromium suite is separate from `tests/`; the CI configuration above runs it in its own job once published. It can also be run locally. [Playwright's Python library](https://playwright.dev/python/docs/library) provides the browser driver; `requirements-browser.txt` pins its direct version without adding it to the runtime requirements. Transitive packages are not locked.
 
 From the repository root (macOS/Linux):
 
