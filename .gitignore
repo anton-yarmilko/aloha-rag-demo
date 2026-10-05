@@ -1,3 +1,5 @@
 .venv/
+.venv-browser/
+.browser-cache/
 __pycache__/
 *.py[cod]
